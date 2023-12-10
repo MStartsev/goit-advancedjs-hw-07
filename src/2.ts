@@ -15,25 +15,41 @@
 */
 
 class Employee {
-  // Заповніть модифікатори доступу
-  name: string;
-  department: string;
-  salary: number;
+  constructor(
+    public name: string,
+    private department: string,
+    protected salary: number
+  ) {}
 
-  constructor(name: string, department: string, salary: number) {
-    this.name = name;
-    this.department = department;
-    this.salary = salary;
-  }
-
-  getEmployeeDetails() {
+  getEmployeeDetails(): string {
     return `Name: ${this.name}, Department: ${this.department}, Salary: ${this.salary}`;
   }
 }
 
 class Manager extends Employee {
-  // Реалізуйте конструктор та збільшіть salary на 10000
+  constructor(
+    name: string,
+    department: string,
+    salary: number,
+    protected bonus: number = 10000
+  ) {
+    super(name, department, salary + bonus);
+  }
+
+  setBonus(newBonus: number): void {
+    this.bonus = newBonus;
+  }
 }
 
+// Example usage
+
+const employee = new Employee("John Dirr", "IT", 150000);
+console.log(employee.getEmployeeDetails()); // Name: John Dirr, Department: IT, Salary: 150000
+console.log(`Employee name: ${employee.name}`); // Employee name: John Dirr
+// console.log("Department: ", employee.department); //Compiler Error
+// console.log("Salary: ", employee.salary); //Compiler Error
+
+const manager = new Manager("Jane Dirr", "Management", 105000);
+console.log(manager.getEmployeeDetails()); // Name: Jane Dirr, Department: Management, Salary: 115000
 
 export {};
